@@ -1,4 +1,7 @@
 """
+we needed to:
+(1) implement a solution where we given a teleport array where we have [['start location','teleport destination'],...,['start location(n)','teleport destination(n)']], die sides(x) (1->x), start_pos (int), board_end (int) and need to determine all possible ending positions
+(2) implement algo to find if starting at start_pos and given a number of die rolls can we end up at the board_end
 """
 
 
