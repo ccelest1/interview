@@ -28,7 +28,7 @@ var findTheWinner = function (n, k) {
         friends.push(i)
     }
 
-    const elimination = (arr, elimination_index, k, n) => {
+    const elimination = (arr, elimination_index, n, k) => {
         // if not friends, exit as we need to return a remaining friend
         // base case, if we get to one friend we want to return that index
         // algo - eliminate friend on specified turn
@@ -39,19 +39,20 @@ var findTheWinner = function (n, k) {
         if (arr.length === 1) {
             return
         }
-        // 2 -> (1+0)%5 -> 1
+        // (2-1)+0%5-> 1%5 -> 1
         elimination_index = ((k - 1) + elimination_index) % arr.length;
+        // console.log(elimination_index)
         arr.splice(elimination_index, 1)
-        elimination(arr, elimination_index, k, n)
+        elimination(arr, elimination_index, n, k)
 
     }
-    elimination(friends, 0, k, n)
+    elimination(friends, 0, n, k)
     return friends[0]
 };
 
 console.log(findTheWinner(
     5, 2
 ))
-console.log(findTheWinner(
-    6, 5
-))
+// console.log(findTheWinner(
+//     6, 5
+// ))
