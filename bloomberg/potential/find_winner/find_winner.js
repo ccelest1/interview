@@ -40,8 +40,8 @@ var findTheWinner = function (n, k) {
             return
         }
         // (2-1)+0%5-> 1%5 -> 1
+        // 1 minus the position to remove a friend, decrement as it is 0 indexed, then add to where elimination is to originate from, modulo by array length in order to find pos of turn respective to number of friends -> store elimination index in order to understand where we start from
         elimination_index = ((k - 1) + elimination_index) % arr.length;
-        // console.log(elimination_index)
         arr.splice(elimination_index, 1)
         elimination(arr, elimination_index, n, k)
 
