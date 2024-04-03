@@ -17,26 +17,36 @@ var minMeetingRooms = function (intervals) {
     }
     starts.sort((a, b) => a - b)
     ends.sort((a, b) => a - b)
-    let [l, r] = [1, 0]
+    let [l, r] = [0, 0]
     let rooms = 0
-    let [lsum, rsum] = [starts[0], ends[0]]
+    let start, end;
+    let res = 0;
     while (l <= starts.length && r <= ends.length) {
-        lsum += starts[l]
-        rsum += ends[r]
-        if (lsum < rsum) {
-            rooms += 1
+        start = starts[l]
+        end = ends[r]
+        if (start < end) {
             l += 1
+            rooms += 1
         } else {
             r += 1
+            rooms -= 1
         }
+        // we want to continue to find max if possible
+        res = Math.max(res, rooms)
     }
-    return rooms
+    return res
 }
 
-console.log(meeting_rooms(
+console.log(minMeetingRooms(
+    [[0, 30], [11, 19], [15, 20]]
+))
+//  should be 3
+
+console.log(minMeetingRooms(
     [[0, 30], [5, 10], [15, 20]]
 ))
 //2
-console.log(meeting_rooms(
+console.log(minMeetingRooms(
     [[7, 10], [2, 4]]
 ))
+// 1

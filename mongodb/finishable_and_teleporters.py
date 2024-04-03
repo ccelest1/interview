@@ -79,20 +79,38 @@ def finishable(teleporters, sides, start_pos, board_end):
     for teleport in teleporters:
         teleport_split = teleport.split(",")
         tracker[int(teleport_split[0])] = int(teleport_split[1])
-    l = 0
-    visited = [start_pos]
-    while l < sides:
-        pos = 0
-        for outcome in outcomes:
-            outcome += l
-            if outcome in tracker:
-                pos = tracker[outcome]
-            visited.append(outcome)
-            print(visited)
-        if visited[-1] == board_end:
+
+    visited = []
+
+    def visiting(visited, starting_side, end_side, pos):
+        if board_end in visited:
             return True
-        l += 1
-    return False
+        # handle reaching board end
+        if pos >= board_end:
+            return True
+        if pos in tracker:
+            return visiting(visited, starting_side, end_side, tracker[pos])
+        new_pos = pos + starting_side
+        if new_pos not in visited and starting_side != end_side:
+            visited.append(new_pos)
+            if visiting(visited, starting_side + 1, end_side, new_pos):
+                return True
+        return False
+
+    return visiting(visited, 1, sides, start_pos)
+
+    # visited = [start_pos]
+    # while l < sides:
+    #     pos = 0
+    #     for outcome in outcomes:
+    #         outcome += l
+    #         if outcome in tracker:
+    #             pos = tracker[outcome]
+    #         visited.append(outcome)
+    #         print(visited)
+    #     if visited[-1] == board_end:
+    #         return True
+    #     l += 1
 
 
 teleporters1 = ["3,1", "4,2", "5,10"]
