@@ -93,7 +93,7 @@ def finishable(teleporters, sides, start_pos, board_end):
         new_pos = pos + starting_side
         if new_pos not in visited and starting_side != end_side:
             visited.append(new_pos)
-            if visiting(visited, starting_side + 1, end_side, new_pos):
+            if visiting(visited, starting_side, end_side, new_pos):
                 return True
         return False
 
@@ -120,11 +120,7 @@ print(finishable(teleporters2, 4, 0, 20))
 
 
 def destinations(teleporters, sides, start_pos, board_end):
-    possible_dice_rolls = [i for i in range(1, sides + 1)]
-    outcomes = []
-    # O(D)
-    for roll in possible_dice_rolls:
-        outcomes.append(start_pos + roll)
+    outcomes = [i + start_pos for i in range(1, sides + 1)]
     tracker = {}
     # O(T)
     for teleport in teleporters:

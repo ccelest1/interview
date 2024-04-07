@@ -32,14 +32,29 @@ class ToDoList:
         """
         self.counter = 0
         """
-        self.tasks = {}
+        # could've been refactored to this
+        self.tasks = {
+            "byId": {
+                1: {
+                    # task1
+                },
+                2: {
+                    # task2
+                },
+                3: {
+                    # task3
+                },
+            },
+            # ordering
+            "allIds": [1, 2, 3],
+        }
         """
         self.head = None
         self.tail = None
         self.length = 0
         """
 
-    def markisDone(self, id):
+    def markDone(self, id):
         counter = 0
         while counter <= self.tasks - 1:
             if self.tasks[counter].id is not id:
@@ -62,9 +77,6 @@ class ToDoList:
         if self.head and length==1:
             self.head.next = Task
         """
-        """
-        append
-        """
 
     def deleteTask(self, id):
         # conditional
@@ -86,12 +98,12 @@ class ToDoList:
 
     def getTasksToDo(self):
         """ """
-        done = []
+        toDo = []
         # self.tasks = {}
         for task in self.tasks:
-            if not isDone(task):
-                done.append(task)
-        return done
+            if not self.markDone(task):
+                toDo.append(task)
+        return toDo
 
     def getAllTasks(self):
         """
