@@ -81,8 +81,12 @@ def finishable(teleporters, sides, start_pos, board_end):
         tracker[int(teleport_split[0])] = int(teleport_split[1])
 
     visited = []
+    # visited = set()
 
+    # literally a graph
     def visiting(visited, starting_side, end_side, pos):
+        visited.append(pos)
+        # visited.add(pos)
         if board_end in visited:
             return True
         # handle reaching board end
@@ -91,9 +95,8 @@ def finishable(teleporters, sides, start_pos, board_end):
         if pos in tracker:
             return visiting(visited, starting_side, end_side, tracker[pos])
         new_pos = pos + starting_side
-        if new_pos not in visited and starting_side != end_side:
-            visited.append(new_pos)
-            if visiting(visited, starting_side, end_side, new_pos):
+        if new_pos not in visited and starting_side <= end_side:
+            if visiting(visited, starting_side + 1, end_side, new_pos):
                 return True
         return False
 
