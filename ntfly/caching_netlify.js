@@ -57,7 +57,6 @@ function cache_savior(input_file) {
             }
 
             // now we are sure we have at least 1 element so we need
-
             package_list_dict.map((package_dict) => {
                 // check against if it's currently in dict, if in dict increment
                 package_list_dict.forEach((package_dict) => {
@@ -113,7 +112,6 @@ function cache_savior(input_file) {
         })();
     }
 }
-
 
 cache_savior(csv_file)
 console.log
