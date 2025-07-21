@@ -1,12 +1,19 @@
 """
 If we use min heap, can get a better time complexity vs insertion sort
-- Solve problem in TC: O(N * log(K))
+- Solve problem:
+    - TC: O(N * log(K)) ->
+        * Building a heap takes O(K) time, insertion + extraction is O(log(K))
+        * Across all three loops, perform ops N times so O(N*Log K)
+    - SC: O(K)
+        * Maintain min-heap of size K+1 through algo -> O(K)
 
 (1) Construct: min-heap of size `k+1` and insert first `k+1` elements into heap
 
 (2) Remove min from heap and insert next element from array into heap -> continue process until array, heap are exhausted
 
 (3) Each pop op from heap inserts into corresponding top element in correct array position
+
+TC:
 """
 
 from typing import List

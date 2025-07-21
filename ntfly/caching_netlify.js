@@ -38,7 +38,7 @@ function cache_savior(input_file) {
 
     // gets package frequency
     const package_list_dict = []
-    while (package_list_dict.length < 10) {
+    while (package_list_dict.length < 11) {
         // loop over csv file,....
         for (let i = 0; i < input_file.length; i++) {
 
@@ -61,10 +61,8 @@ function cache_savior(input_file) {
                 // check against if it's currently in dict, if in dict increment
                 package_list_dict.forEach((package_dict) => {
                     if (package_dict.package === package_name) {
-                        if (package_dict.frequency < 100) {
-                            package_dict.frequency += 1;
-                            packageFound = true
-                        }
+                        package_dict.frequency += 1;
+                        packageFound = true
                     }
                 })
                 // if it's not in dict create a new allocation for it
@@ -81,7 +79,7 @@ function cache_savior(input_file) {
         }
 
         package_list_dict.sort((a, b) => b.frequency - a.frequency);
-        const filtered_list = package_list_dict.filter(dict => dict.frequency >= 100).slice(0, 10);
+        const filtered_list = package_list_dict.filter(dict => dict.frequency >= 100).slice(0, 11);
 
         async function get_package(filtered_list) {
             // we want to get the size using the npm directory
@@ -102,7 +100,6 @@ function cache_savior(input_file) {
         }
         (async () => {
             const result = await get_package(filtered_list)
-            console.log(result)
 
             const sum = result.reduce((acc, dict) => {
                 return acc + (typeof dict.size_mb === 'number' ? dict.size_mb : 0);
@@ -114,4 +111,3 @@ function cache_savior(input_file) {
 }
 
 cache_savior(csv_file)
-console.log

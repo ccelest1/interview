@@ -45,6 +45,16 @@ output: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 ### [Solutions]
 - [Simple Solution](skm.js)
+    * TC: O(n*k), SC: O(1) -> modifies array in place instead of creating new array
 - [Heap Solution](heapify.py)
+    * TC: O(N * log(K)), SC: O(K)
 
 ### Rationale of Insertion vs Merge Sort
+- In this case with a dataset that will be less than or equal to 100 elements, insertion sort is a better sorting algo to employ
+    * Insertion sort = faster for small, nearly sorted datasets (as is the case as above)
+        - O(n) to O(n^2) [ large, unsorted datasets ]
+        - In place sorting algo -> doesn't require extra space proportional to input size
+    * Merge sort -> larger, very unsorted datasets
+        - Recursively divide array into smaller subarrays -> sort subarrays -> merge sorted subarrays together
+        - TC: O(n log n), divide and conquer algo
+        - SC: O(n), extra space for storing merged subarrays

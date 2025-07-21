@@ -10,7 +10,7 @@ Simple Solution = sort whole array
 Worst case TC = O(n * log(n)), n being input array size
 Does not use the fact that array is k sorted
 
-- Use insertion sort that sorts correct order in O(N*K) time, O(n) space
+- Use insertion sort that sorts correct order in O(N*K) time, O(1) space due to in place sorting via insertion sort
  */
 
 function kMessedArray(arr, k) {
