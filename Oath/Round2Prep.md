@@ -154,7 +154,7 @@ interface Student{
     id: number,
     name: string,
     magic(spell: string): void
-    age?: number, //optional
+    age?: number; //optional
     readonly house: string //can only be assigned once on instantiation
 }
 
@@ -164,6 +164,34 @@ const harry: Student = {
     magic: (spell) => console.log(spell),
     house: 'gryff'
 }
+
+// can also do type
+type student_type = {
+    id: number;
+    name: string;
+    magic(spell:string):void;
+    age?:number;
+    readonly house: string
+}
+
+const harry: student_type = {
+    id: 1,
+    name: 'Harry',
+    magic: (spell) => console.log(spell),
+    house: 'gryff'
+}
+
+/*
+
+Use interfaces:
+When defining object shape that I expect to extend or repeatedly declare
+
+Use type aliases:
+When needing to express more complex types (unions, intersections, tuples)
+
+Simple product shapes: Preference is towards interface due to readability, future extensibility
+
+ * /
 ```
 ##### Class
 - Use interfaces -> assign type to class with `implements`
@@ -248,7 +276,383 @@ function App(
 render(<App title="Welcome" />, document.getElementById("root"));
 ```
 
+[TS in React](https://profy.dev/article/react-typescript)
+##### First Sections
+```ts
+// types
+string, boolean, number
+// arrays -> can be built from primitives/other type
+number[], string[], User[]
+//objects and types, enums
+enum UserRole {
+  CEO = "ceo",
+  CTO = "cto",
+  SUBORDINATE = "inferior-person",
+}
 
+type User = {
+    firstName: string;
+    age: number;
+    isNice: boolean;
+    role: UserRole; //use enum for specificity
+    skills; string[];
+    friends?: User[];
+}
+const user = {
+  firstName: "Pat",
+  age: 23,
+  isNice: false,
+  role: UserRole.CTO,
+    skills: ["CSS", "HTML", "jQuery"],
+    friends: undefined
+}
+```
+
+##### Functions
+```ts
+// can either write types inline, type extraction and also specify return type
+function fireUser({ firstName, age, isNice }: {
+  firstName: string;
+  age: number;
+  isNice: boolean;
+}): User {
+  ...
+}
+type User = {
+  firstName: string;
+  age: number;
+  role: UserRole;
+}
+
+function fireUser({ firstName, age, role }: User): User {
+  ...
+}
+
+// exercise
+// Challenge: type the function parameters
+type product = {
+  name: string;
+  price: number;
+  images: string[];
+}
+
+function updateProduct({name, price, images}: product):void{
+  // update logic here ...
+  console.log({ name, price, images });
+}
+
+updateProduct("Shampoo", 2.99, ["image-1.png", "image-2.png"]);
+
+```
+
+##### React w/ TS
+```tsx
+// example of passing props in order to enable messages specific to user  determined by role as specified by the enum
+
+enum UserRole {
+  CEO = "ceo",
+  CTO = "cto",
+  SUBORDINATE = "inferior-person",
+}
+
+type UserProfileProps = {
+  firstName: string;
+  role: UserRole;
+}
+
+function UserProfile({ firstName, role }: UserProfileProps) {
+    if (role === UserRole.CTO) {
+    return <div>Hey Pat, you're AWESOME!!</div>
+  }
+  return <div>Hi {firstName}, you suck!</div>
+}
+
+// exercise
+
+// Challenge: Fix the error in the App component
+// Challenge: type the function parameters
+
+
+export function App() {
+  return (
+    <div>
+      <Product />
+    </div>
+  );
+}
+
+function Product() {
+  const { product, error } = useGetProduct();
+
+  if (error) {
+    return <>{error.message}</>;
+  }
+
+// allows for product to not error undefined
+  if(!product){
+    return(
+      <div> No product </div>
+    )
+  }
+  return (
+    <div>
+      <div>
+        {product.name} ${product.price}
+      </div>
+      // add key for mapping
+      {product.images.map((src, idx) => (
+        <img key={idx} src={src} />
+      ))}
+    </div>
+  );
+}
+
+// no need to read this, simply check
+// the types in the Product component
+// create type
+type product_type = {
+  name: string;
+  price: number;
+  images: string[];
+}
+function useGetProduct():
+// set product_type for product
+  | { product: product_type; error: undefined }
+  | { product: undefined; error: Error } {
+  if (Math.random() > 0.5) {
+    return { product: undefined, error: new Error("Something went wrong") };
+  }
+  return {
+    error: undefined,
+    product: {
+      name: "Shampoo",
+      price: 2.99,
+      images: ["image-1.png", "image-2.png"],
+    },
+  };
+}
+```
+###### Callback
+```tsx
+type UserProfileProps = {
+  id: string;
+  firstName: string;
+  role: UserRole;
+  fireUser: (id: string) => void;
+};
+
+function UserProfile({ id, firstName, role, fireUser }: UserProfileProps) {
+  if (role === UserRole.CTO) {
+    return <div>Hey Pat, you're AWESOME!!</div>;
+  }
+  return (
+    <>
+      <div>Hi {firstName}, you suck!</div>
+      <button onClick={() => fireUser(id)}>Fire this loser!</button>
+    </>
+  );
+}
+
+//exercise
+// Challenge: type the props so that the component
+// can be rendered as follows
+//
+// <Product
+//   id="product-1"
+//   name="Shampoo"
+//   price={2.99}
+//   images={["image-1.png", "image-2.png"]}
+//   addToBasket={(id) => console.log(id)}
+// />
+
+type product = {
+  id:string;
+  name:string;
+  price:number;
+  images:string[];
+}
+interface product_props{
+  Product: product;
+  addToBasket(id:string):void;
+}
+export function Product({ Product, addToBasket }: product_props) {
+  return (
+    <div>
+      <div>
+        {Product.name} ${Product.price}
+      </div>
+      {Product.images.map((src) => (
+        <img src={src} />
+      ))}
+      <button onClick={() => addToBasket(id)}></button>
+    </div>
+  );
+}
+
+// Default Props
+
+type ProductProps = {
+  name: string;
+  price: number;
+  // images is made optional
+  images?: string[];
+};
+
+// supply empty array as default input
+export function Product({ name, price, images = [] }: ProductProps) {
+  return (
+    <div>
+      <div>
+        {name} ${price}
+      </div>
+      {images.map((src) => (
+        <img src={src} />
+      ))}
+    </div>
+  );
+}
+
+```
+
+###### useState Hook
+```tsx
+type ProductProps = {
+  name: string;
+  price: number;
+};
+
+export function Product({ name, price }: ProductProps) {
+    // added string[] type
+  const [images, setImages] = useState<string[]>([]);
+
+  const addImage = () => {
+    setImages(images.concat(`image-${images.length + 1}.png`));
+  };
+  ...
+
+// custom Hooks
+type ProductProps = {
+  name: string;
+  price: number;
+  images: string[];
+};
+
+// added string[] for initialImages
+function useImages(initialImages: string[]) {
+  const [images, setImages] = useState(initialImages);
+
+  const addImage = () => {
+    setImages(images.concat(`image-${images.length + 1}.png`));
+  };
+  // add Image for second return value
+  return { images, addImage };
+}
+```
+###### TS React Events
+```tsx
+// Challenge: Type the event param in the onChangeName
+// handler and set the name correctly
+
+import { useState } from "react";
+
+export function CreateProductForm() {
+  const [name, setName] = useState("");
+
+ // set the event type correctly with inference via the onchange
+ // `React.ChangeEvent<HTMLInputElement>`
+ // then setName to value via `event.target.value`
+  const onChangeName = (event:React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+
+  return (
+    <form>
+      <input onChange={onChangeName} placeholder="Name" value={name} />
+    </form>
+  );
+}
+```
+
+###### Child Type or Component Type
+```tsx
+// React.ReactNode provides great flexibility, pass anything as child except object
+type Layoutprops = {
+    children: React.ReactNode;
+};
+function Layout({ children }): Layoutprops_{
+    return <div> {children} </div>
+}
+
+// only allows markup
+type LayoutProps = {
+  children: React.ReactElement; // same as JSX.Element
+};
+```
+
+###### Using Generics - 3rd party libs
+```tsx
+// axios -> returning requets
+import axios from "axios"
+
+async function fetchUser() {
+  const response = await axios.get<User>("https://example.com/api/user");
+  return response.data;
+}
+
+// react-query
+import { useQuery } from "@tanstack/react-query";
+
+function UserProfile() {
+  // generic types for data and error
+  const { data, error } = useQuery<User, Error>(["user"], () => fetchUser());
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  ...
+}
+
+// styled-comps
+import styled from "styled-components";
+
+// generic type for props
+const MenuItem = styled.li<{ isActive: boolean }>`
+  background: ${(props) => (props.isActive ? "red" : "gray")};
+`;
+
+function Menu() {
+  return (
+    <ul>
+      <MenuItem isActive>Menu Item 1</MenuItem>
+    </ul>
+  );
+}
+```
+
+###### Separating Types
+```tsx
+type User = {
+  firstName: string;
+  role: UserRole;
+}
+
+type UserProfileProps = {
+  user: User;
+    fireUser: (user: User) => void;
+}
+
+function UserProfile({ user, onClick }: UserProfileProps) {
+  return (
+    <>
+      <div>Hi {user.firstName}, you suck!</div>
+      <button onClick={() => fireUser(user)}>
+        Fire this loser!
+      </button>
+    </>
+  );
+}
+```
 
 
 
@@ -358,31 +762,31 @@ return <div>{props.number} is an {description} number</div>;
             ```
 
 ##### React State
--Class Components
+- __Class Components__
 
-    ```jsx
-    const InputBox = React.createClass({
-    // set default component state -> empty text value [ use component method getInitialState() returning state object for component ]
-    getInitialState () {
-    return {
-    text: ''
-    }
-    },
-    // changeText() set to onChange event -> updating React state requires setState() method
-    changeText (event) {
-    this.setState({text: event.target.value})
-    },
-    render () {
-    return (
-    <div>
-    <input type='text' onChange={this.changeText}
-    placeholder='text' value={this.state.text} />
-    <span>{this.state.text}</span>
-    </div>
-    )
-    }
-    })
-    ```
+```jsx
+const InputBox = React.createClass({
+// set default component state -> empty text value [ use component method getInitialState() returning state object for component ]
+getInitialState () {
+return {
+text: ''
+}
+},
+// changeText() set to onChange event -> updating React state requires setState() method
+changeText (event) {
+this.setState({text: event.target.value})
+},
+render () {
+return (
+<div>
+<input type='text' onChange={this.changeText}
+placeholder='text' value={this.state.text} />
+<span>{this.state.text}</span>
+</div>
+)
+}
+})
+```
 
 ##### React Hooks
 - Allows for use of state, other React fts w/o writing a class -> functions that hook into React state and lifecycle fts from function components
@@ -403,6 +807,9 @@ return <div>{props.number} is an {description} number</div>;
 #### Review Python
 #### Review GraphQl
 #### Review SQL
+__[Learn SQL Concepts](https://www.youtube.com/watch?v=3s0lFtUrhSQ&t=74s)__
+- SQL (structured query language): retrieve, insert, update and delete data from db
+
 #### Review Serverless
 ### Review DP Tech
 ### Hands On
