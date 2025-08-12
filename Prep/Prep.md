@@ -24,6 +24,14 @@
     - [TPM](#talking-points-and-materials)
 
 
+#### Intro
+INTRODUCTION
+Hello, My name is Tyler. I am an interdisciplinary Software Developer with experience in Full Stack Agile Development and AI Programming. I value creating quality software through careful planning and design with my focus being centered on stakeholder value and user experience.
+
+In my previous role at the USGS, I primairrly worked on migrated legacy services over to modern stacks and providing users with access via portals powered by our backend system and data repositories. I worked on refactoring several of our backend pipelines as well
+
+In regards to my background, I have had a wealth of software, data, and AI related experiences. During my undergraduate, I was a platform analyst for an energy company where I conducted A/B testing on their web and mobile interfaces and modeled a number of data and demand response trends regarding energy demand management. Following my undergraduate, I interned at an AI-focused company called Atlantic Automation and created an optimized data pipeline for financial analytics for their law firm partner ‘Bain and Barkley’. Two of my most recent experiences involved being a Backend Team Manager for an event platform for a coding organization and working on the frontend for a radiology report management platform.
+
 
 #### Resume Review
 > USGS - DOI - Integrated Info Disseminated Division
@@ -41,7 +49,7 @@ GOVERNMENT - SOFTWARE ENGINEER
 
   - After that approval process, our determination of what stat to be calculated is then inputted by the user via a Fastapi frontend and then we use match-case python blocks in order to return the correct desired data [ mean, percentiles, median ]  for the provided site number
   - Percentiles in particular was interesting
-    - We used a package (that had to be streamlined in its required dependencies) called HYSWAP (Hydrologic Suraface Water Analysis Package) that is used in manipulation and visualization of USGS Water Data
+    - We used a package (that had to be streamlined in its required dependencies) called HYSWAP (Hydrologic Surface Water Analysis Package) that is used in manipulation and visualization of USGS Water Data
     - HYSWAP has both Variable, Fixed, and Variable Moving Window percentiles to be returned (Variables -> computed with flow obs for particular day, fixed -> computer with flow obs in recorded period, Moving Window -> Understand how a particular time period ranks compared to other times of year in history)
 
  - Perform filtration of data [ approved, estimated ] -> convert these filtered dictionaries into a dataframe -> dataframe is fed into desired percentile methods desired by user -> return percentiles and other desired data (median, mode, etc.)
@@ -82,6 +90,11 @@ Created RESTful API methods using FastAPI for event creation, attendance trackin
 BP1
 Successfully aided in implementing security via user authentication and authorization using OAuth to provide protected endpoints and role identity
 BP1
+
+Led full-stack efforts on event-experience management project for coding organization (NYC Code and Coffee) in Javascript, Python (Primarily Backend with a team of 5, with design/prototyping using Svelte)
+S - Had the opportunity to work on an event-experience management platform for a coding organization in NY known as Code and Coffee -> T - I was tasked with leading the backend efforts for the project and as a result I had to perform reconnaissance for what would best suite the org’s needs -> A - After gathering and confirming ideal technologies to be involved for our implementation (fastapi, sqlite, docker, oauth, message queues, and websockets), I then made sure to understand what individuals would be involved in the backend efforts and delegated tasks among them. -> R - We were able to accomplish serious progress with the backend, having created a prototype complete with desired models, routes, relationships, and a proper security flow. We are able to take on suggestions from the frontend team and often demo’ed our implementation to drive the whole team forward.
+
+For the EEA app, I was put in charge with leading the efforts of the backend system and quickly realized that actualizing the stakeholder’s ideas would involve a somewhat intricate design -> I informed the stakeholder about my idea, but they rebuffed my ideas due to a lack of understanding and ask that I present my findings/concepts in a way that would be easier to understand -> I used Figma in order to conceptualize my be idea with models and relationships outlined -> The stakeholder had a clearer idea and was able to approve/make better suggestions.
 
 ### STAR
 STAR
@@ -138,7 +151,7 @@ For the EEA app, I was put in charge with leading the efforts of the backend sys
 
   - Typescript
     * TS:
-    
+
       * Nxtgen
         - [ Social platform for engineers to showcase own projects/developments ]
           * Performed prototyping using TS (Static Types, Compile time errors)
@@ -941,6 +954,60 @@ placeholder='text' value={this.state.text} />
 #### Review Next
 #### Review Python
 #### Review GraphQl
+* GQL - Query language for APIs and server-side runtime for query execution using type system defined in data
+  * Uses strongly typed schema -> contract between client and server
+  * Exposes single endpoint, allow clients to get data need from one request (avoid over and under fetching)
+
+- Query Structure
+```go
+query GetProduct{
+  product(id:'abc123'){
+    name
+    price
+    inStock
+    category{
+      name
+      parent
+    }
+  }
+}
+// able to pass arguments and requested nested data
+// support vars, aliases, fragments for flex, readable requests
+```
+
+- mutations: Create, update, delete data -> changes server data
+  * start with keyword `mutation`
+  ```go
+  mutation AddProduct{
+    addProduct(name:'soap',price;2){
+      id
+      name
+      price
+    }
+  }
+  // can update, insert, delete records w/ mutations -> optionally w/ vars for dynamic inputs
+  ```
+
+- Resolvers: backend functions tell Graphql to fetch, computer data for field/mutation
+  - each field in query/mutation has corresponding resolver function
+  - connect schema to actually data sources (dbs, apis) and handle logic for what is to be returned to client
+  ```js
+  const resolvers = {
+    Query: {
+      product[parent, args, context, info]{
+        return products.find(
+          p => p.id === args.id
+        )
+      },
+      Mutation:{
+        addProduct(parent, args, context, info){
+          return db.createProduct(args)
+        }
+      }
+    }
+  }
+  ```
+
 #### Review SQL
 > How to judge if a SQL query is well written and performant
 
