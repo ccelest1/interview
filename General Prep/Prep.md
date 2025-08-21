@@ -43,7 +43,7 @@ GOVERNMENT - SOFTWARE ENGINEER
 
 [ Revise to STAR Format]
   - Implemented query helper for assisting in the statistical calculation of provisional and approved data in our ingest pipeline
-    * As our water quality/resource statistics require in field data acquired by researchers and scientists, we have to make first the delineation between data that that has been certified as being accurate and those that are to be audited (are estimated)
+    * As our water quality/resource statistics require in field data acquired by researchers and scientists, we have to make a delineation between data that that has been certified as being accurate and those that are to be audited i.e estimated data
     * The above distinction will be demarcated in our dbs via flags in the dictionary/json formatted data
       - Flag: ‘A,e’ in qualifiers key section
 

@@ -3,6 +3,7 @@
  * @returns {Array[string]}
  */
 function stringChallenge(input_str) {
+
     let float_str = parseFloat(input_str)
     let visual_stars = 0
 
@@ -18,6 +19,7 @@ function stringChallenge(input_str) {
     /**
      *
      * @param {Number} stars
+     * @param {Array[]} res
      * @param {Array[string]} res
      */
     const return_visual_stars = (stars, res = []) => {
@@ -27,7 +29,7 @@ function stringChallenge(input_str) {
                 stars -= 1
             } else {
                 res.push('half')
-                stars -= .25
+                stars -= .5
             }
         }
         while (res.length < 5) {
@@ -36,6 +38,7 @@ function stringChallenge(input_str) {
         return res.join(' ')
     }
     return return_visual_stars(stars)
+
 }
 
 const inputs = [
