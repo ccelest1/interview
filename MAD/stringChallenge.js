@@ -3,10 +3,11 @@
  * @returns {Array[string]}
  */
 function stringChallenge(input_str) {
-
     let float_str = parseFloat(input_str)
     let visual_stars = 0
 
+    // created this function as Math.round(4.5) rounds to 5, so I decided to create a
+    // recursive function that takes in float values and converts to correct rounding based on star-review implementation
     const StarHelper = (round_stars, visual_stars) => {
         if (!round_stars || round_stars < .25) {
             return visual_stars
@@ -21,6 +22,10 @@ function stringChallenge(input_str) {
      * @param {Number} stars
      * @param {Array[]} res
      * @param {Array[string]} res
+
+     Now i need to take that stars float that I gained from the above helper and then return
+     the correct visual implementation in the expected format of a string detailing the full, half, empty
+     that would be required for the fe product for visual ratings
      */
     const return_visual_stars = (stars, res = []) => {
         while (stars > .25) {
