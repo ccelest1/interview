@@ -1,5 +1,0 @@
-# Resources
-
-## What is RBAC
-
-## 

@@ -80,7 +80,7 @@ Nonfunctional Reqs (how well a functional reqs are to be provided)
     - system should be scalable and handle high throughput for popular campaigns
     - System is of course very read heavy (read>write)
     - system should provide secure donor transactions (purchase path security)
-    - RBAC system
+    - RBAC system -> dictate user roles and permissions
 
 * Out of scope
     - system should ensure GDPR compliance
@@ -275,4 +275,4 @@ def assert_role(user: User, allowed_roles: List[UserRole]):
 ```
 
 ## ML
-- 
+-
