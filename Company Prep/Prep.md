@@ -28,7 +28,7 @@
 INTRODUCTION
 Hello, My name is Tyler. I am an interdisciplinary Software Developer with experience in Full Stack Agile Development and AI Programming. I value creating quality software through careful planning and design with my focus being centered on stakeholder value and user experience.
 
-In my previous role at the USGS, I primairrly worked on migrated legacy services over to modern stacks and providing users with access via portals powered by our backend system and data repositories. I worked on refactoring several of our backend pipelines as well
+In my previous role at the USGS, I primarily worked on migrated legacy services over to modern stacks and providing users with access via portals powered by our backend system and data repositories. I worked on refactoring several of our backend pipelines as well
 
 In regards to my background, I have had a wealth of software, data, and AI related experiences. During my undergraduate, I was a platform analyst for an energy company where I conducted A/B testing on their web and mobile interfaces and modeled a number of data and demand response trends regarding energy demand management. Following my undergraduate, I interned at an AI-focused company called Atlantic Automation and created an optimized data pipeline for financial analytics for their law firm partner ‘Bain and Barkley’. Two of my most recent experiences involved being a Backend Team Manager for an event platform for a coding organization and working on the frontend for a radiology report management platform.
 
