@@ -67,7 +67,7 @@ GOVERNMENT - SOFTWARE ENGINEER
 
 - Engineered a secure, tier-limited DLQ redrive utility in iow-operational-utilities using AWS Lambda, enabling efficient data recovery within AWS SQS
   - Needed a method in order to redrive messages from a Dead Letter Queue to Source Queue (AWS)
-    * Implemented code using AWS CDK to construct said method
+    * Implemented code using AWS SDK to construct said method
     * Required a function that takes in params of information targeting DLQ to be redriven for processing or deletion as required
 
 - Implemented production-tier statistics service API and refined SQL queries to support scalable data loads (AWS RDS) and robust analytics
