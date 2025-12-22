@@ -41,23 +41,4 @@
 -
 -
 
-### Preliminary Solution
-- __Time Complexity__:
-
-- __Space Complexity__:
-
-#### _Backside_
-- My solution would involve:
-
-
-#### Additional Details
-- Reflecting on Attempt:
-
-#### Solution Code
-[JS Solution]()
-
-### [Neetcode]()
-- [Neetcode Solution](nc.py)
-#### TC, SC
-
-- #### NC Notes
+### Notes
