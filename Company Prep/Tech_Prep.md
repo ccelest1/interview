@@ -18,9 +18,63 @@
 
 ## Closures, Prototype inheritance, Recursion and coding challenges.
 - Closures
+  * Function remembers vars from scope in which it was created
+  ```js
+    function createCounter(){
+      let count = 0;
+
+      return function(){
+        count+=1
+        return count;
+      };
+    }
+    const counter = createCounter():
+    // each call increments count variable thus createcounter() remembers the num currently stored in count
+    counter();
+    counter();
+    counter();
+  ```
 
 - Prototype Inheritance
+```js
+  function Person(name){
+    this.name = name;
+  }
+  Person.prototype.sayHello = function(){
+    return `Hi, Im ${this.name}`
+  }
+
+  const alice = new Person('Alice')
+  alice.sayHello() // Hi, Im Alice
+```
 - Recursion
+```js
+// fib
+function factorial(n){
+  if(n===0) return 1;
+  return n * factorial(n-1)
+}
+// sumTree
+function sumTree(node){
+  if(!node) return 0
+  return node.value + sumTree(node.left) + sumTree(node.right)
+}
+```
+
+- Flatten
+```js
+function flatten(arr){
+  let result = []
+  for(let item of arr){
+    if(Array.isArray(item)){
+      result.push(...flatten(item))
+    }
+  }else{
+    result.push(item)
+  }
+  return result
+}
+```
 
 #### Review Typescript
 > Experience with Typescript
